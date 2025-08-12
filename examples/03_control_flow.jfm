@@ -1,0 +1,43 @@
+// Control flow structures
+fn main() -> i32 {
+    let x: i32 = 10;
+    let y: i32 = 20;
+    
+    // If-else statements
+    if (x > y) {
+        println("x is greater");
+    } else if (x < y) {
+        println("y is greater");
+    } else {
+        println("they are equal");
+    }
+    
+    // While loop
+    let mut i: i32 = 0;
+    while (i < 5) {
+        println(i);
+        i = i + 1;
+    }
+    
+    // For loop
+    for j: i32 in 0..10 {
+        if (j == 5) {
+            continue;
+        }
+        if (j == 8) {
+            break;
+        }
+        println(j);
+    }
+    
+    // Infinite loop with break
+    let mut count: i32 = 0;
+    loop {
+        count = count + 1;
+        if (count >= 3) {
+            break;
+        }
+    }
+    
+    return 0;
+}

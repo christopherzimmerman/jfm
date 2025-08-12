@@ -1,0 +1,251 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "JFM",
+    "patterns": [
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#characters"
+        },
+        {
+            "include": "#numbers"
+        },
+        {
+            "include": "#types"
+        },
+        {
+            "include": "#functions"
+        },
+        {
+            "include": "#structs"
+        },
+        {
+            "include": "#operators"
+        },
+        {
+            "include": "#punctuation"
+        }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.line.double-slash.jfm",
+                    "match": "//.*$"
+                },
+                {
+                    "name": "comment.block.jfm",
+                    "begin": "/\\*",
+                    "end": "\\*/"
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.jfm",
+                    "match": "\\b(if|else|while|for|loop|break|continue|return|in)\\b"
+                },
+                {
+                    "name": "keyword.other.jfm",
+                    "match": "\\b(fn|let|mut|struct|impl|include|extern)\\b"
+                },
+                {
+                    "name": "constant.language.boolean.jfm",
+                    "match": "\\b(true|false)\\b"
+                },
+                {
+                    "name": "variable.language.self.jfm",
+                    "match": "\\b(self)\\b"
+                }
+            ]
+        },
+        "types": {
+            "patterns": [
+                {
+                    "name": "storage.type.primitive.jfm",
+                    "match": "\\b(i8|i16|i32|i64|u8|u16|u32|u64|f32|f64|bool|char|str)\\b"
+                },
+                {
+                    "name": "storage.modifier.jfm",
+                    "match": "\\b(mut|const)\\b"
+                },
+                {
+                    "name": "entity.name.type.jfm",
+                    "match": "\\b[A-Z][A-Za-z0-9_]*\\b"
+                }
+            ]
+        },
+        "functions": {
+            "patterns": [
+                {
+                    "name": "entity.name.function.jfm",
+                    "match": "\\b(fn)\\s+([a-z_][a-zA-Z0-9_]*)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other.fn.jfm"
+                        },
+                        "2": {
+                            "name": "entity.name.function.jfm"
+                        }
+                    }
+                },
+                {
+                    "name": "entity.name.function.jfm",
+                    "match": "\\b([a-z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.function.call.jfm"
+                        }
+                    }
+                },
+                {
+                    "name": "support.function.builtin.jfm",
+                    "match": "\\b(println|printf)\\b"
+                }
+            ]
+        },
+        "structs": {
+            "patterns": [
+                {
+                    "name": "entity.name.type.struct.jfm",
+                    "match": "\\b(struct)\\s+([A-Z][A-Za-z0-9_]*)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other.struct.jfm"
+                        },
+                        "2": {
+                            "name": "entity.name.type.struct.jfm"
+                        }
+                    }
+                },
+                {
+                    "name": "entity.name.type.impl.jfm",
+                    "match": "\\b(impl)\\s+([A-Z][A-Za-z0-9_]*)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other.impl.jfm"
+                        },
+                        "2": {
+                            "name": "entity.name.type.impl.jfm"
+                        }
+                    }
+                }
+            ]
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.double.jfm",
+                    "begin": "\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.jfm",
+                            "match": "\\\\(n|r|t|\\\\|\")"
+                        }
+                    ]
+                }
+            ]
+        },
+        "characters": {
+            "patterns": [
+                {
+                    "name": "string.quoted.single.jfm",
+                    "begin": "'",
+                    "end": "'",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.jfm",
+                            "match": "\\\\(n|r|t|\\\\|')"
+                        }
+                    ]
+                }
+            ]
+        },
+        "numbers": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.float.jfm",
+                    "match": "\\b\\d+\\.\\d+([eE][+-]?\\d+)?\\b"
+                },
+                {
+                    "name": "constant.numeric.integer.jfm",
+                    "match": "\\b\\d+\\b"
+                },
+                {
+                    "name": "constant.numeric.hex.jfm",
+                    "match": "\\b0x[0-9a-fA-F]+\\b"
+                },
+                {
+                    "name": "constant.numeric.binary.jfm",
+                    "match": "\\b0b[01]+\\b"
+                }
+            ]
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "name": "keyword.operator.arithmetic.jfm",
+                    "match": "(\\+|\\-|\\*|\\/|%)"
+                },
+                {
+                    "name": "keyword.operator.comparison.jfm",
+                    "match": "(==|!=|<=|>=|<|>)"
+                },
+                {
+                    "name": "keyword.operator.logical.jfm",
+                    "match": "(&&|\\|\\||!)"
+                },
+                {
+                    "name": "keyword.operator.bitwise.jfm",
+                    "match": "(&|\\||\\^|<<|>>)"
+                },
+                {
+                    "name": "keyword.operator.assignment.jfm",
+                    "match": "(=|\\+=|\\-=|\\*=|\\/=)"
+                },
+                {
+                    "name": "keyword.operator.arrow.jfm",
+                    "match": "->"
+                },
+                {
+                    "name": "keyword.operator.double-colon.jfm",
+                    "match": "::"
+                },
+                {
+                    "name": "keyword.operator.range.jfm",
+                    "match": "\\.\\."
+                }
+            ]
+        },
+        "punctuation": {
+            "patterns": [
+                {
+                    "name": "punctuation.separator.jfm",
+                    "match": "[,;]"
+                },
+                {
+                    "name": "punctuation.accessor.jfm",
+                    "match": "\\."
+                },
+                {
+                    "name": "punctuation.definition.type.jfm",
+                    "match": ":"
+                },
+                {
+                    "name": "punctuation.brackets.jfm",
+                    "match": "[\\[\\]\\(\\)\\{\\}]"
+                }
+            ]
+        }
+    },
+    "scopeName": "source.jfm"
+}

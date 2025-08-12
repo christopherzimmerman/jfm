@@ -1,0 +1,44 @@
+// Function definitions and calls
+fn add(a: i32, b: i32) -> i32 {
+    return a + b;
+}
+
+fn multiply(x: f64, y: f64) -> f64 {
+    return x * y;
+}
+
+fn greet(name: str) {
+    print("Hello, ");
+    println(name);
+}
+
+fn factorial(n: i32) -> i32 {
+    if (n <= 1) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+fn fibonacci(n: i32) -> i32 {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+fn main() -> i32 {
+    let sum: i32 = add(5, 3);
+    let product: f64 = multiply(2.5, 4.0);
+    
+    greet("Alice");
+    
+    let fact5: i32 = factorial(5);
+    let fib10: i32 = fibonacci(10);
+    
+    println(sum);
+    println(product);
+    println(fact5);
+    println(fib10);
+    
+    return 0;
+}

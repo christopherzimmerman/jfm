@@ -1,0 +1,23 @@
+// Variable declarations and basic operations
+fn main() -> i32 {
+    // Immutable variables (default)
+    let x: i32 = 42;
+    let y: i32 = 10;  // Explicit type required
+    
+    // Mutable variables
+    let mut counter: i32 = 0;
+    counter = counter + 1;
+    counter += 5;
+    
+    // Different types
+    let pi: f64 = 3.14159;
+    let is_ready: bool = true;
+    let letter: char = 'A';
+    let message: str = "Hello, JFM!";
+    
+    // Arrays
+    let numbers: [i32; 5] = [1, 2, 3, 4, 5];
+    let first: i32 = numbers[0];
+    
+    return 0;
+}

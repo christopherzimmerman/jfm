@@ -1,0 +1,38 @@
+// Example of C interop - using math functions from C's math library
+// The math.h header is already included by default, but we can declare extern functions
+
+// Declare external C functions we want to use
+extern fn sin(x: f64) -> f64;
+extern fn cos(x: f64) -> f64;
+extern fn sqrt(x: f64) -> f64;
+extern fn pow(base: f64, exp: f64) -> f64;
+
+fn calculate_hypotenuse(a: f64, b: f64) -> f64 {
+    return sqrt(pow(a, 2.0) + pow(b, 2.0));
+}
+
+fn main() -> i32 {
+    let angle: f64 = 3.14159 / 4.0;  // 45 degrees in radians
+    
+    println("Trigonometry:");
+    print("sin(45°) = ");
+    println(sin(angle));
+    
+    print("cos(45°) = ");
+    println(cos(angle));
+    
+    let a: f64 = 3.0;
+    let b: f64 = 4.0;
+    let c: f64 = calculate_hypotenuse(a, b);
+    
+    println("");
+    println("Pythagorean theorem:");
+    print("a = ");
+    println(a);
+    print("b = ");
+    println(b);
+    print("c = sqrt(a² + b²) = ");
+    println(c);
+    
+    return 0;
+}

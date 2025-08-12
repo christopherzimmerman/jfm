@@ -1,0 +1,51 @@
+// Complex expressions and operators
+
+fn add(a: i32, b: i32) -> i32 {
+    return a + b;
+}
+
+fn multiply(a: i32, b: i32) -> i32 {
+    return a * b;
+}
+
+fn divide(a: i32, b: i32) -> i32 {
+    return a / b;
+}
+
+fn main() -> i32 {
+    // Arithmetic operators
+    let a: i32 = 10 + 5 * 2;  // 20 (precedence)
+    let b: i32 = (10 + 5) * 2;  // 30
+    let c: i32 = 100 / 10 % 3;  // 1
+    
+    // Comparison operators
+    let is_greater: bool = 10 > 5;
+    let is_equal: bool = 42 == 42;
+    let is_not_equal: bool = 1 != 2;
+    let is_less_or_equal: bool = 5 <= 5;
+    
+    // Logical operators
+    let and_result: bool = true && false;
+    let or_result: bool = true || false;
+    let not_result: bool = !true;
+    
+    // Bitwise operators
+    let bit_and: i32 = 10 & 12;  // 8 (0b1010 & 0b1100 = 0b1000)
+    let bit_or: i32 = 10 | 12;   // 14 (0b1010 | 0b1100 = 0b1110)
+    let bit_xor: i32 = 10 ^ 12;  // 6 (0b1010 ^ 0b1100 = 0b0110)
+    let bit_shift_left: i32 = 1 << 3;    // 8
+    let bit_shift_right: i32 = 16 >> 2;  // 4
+    
+    // Complex expressions
+    let complex: i32 = (5 + 3) * 2 - 10 / 2 + 1;
+    let logical_complex: bool = (a > 10 && b < 50) || (c == 1 && !false);
+    
+    // Function calls in expressions
+    let result: i32 = add(multiply(2, 3), divide(10, 2));
+    
+    // Array indexing in expressions
+    let arr: [i32; 3] = [10, 20, 30];
+    let sum: i32 = arr[0] + arr[1] + arr[2];
+    
+    return 0;
+}

@@ -1,0 +1,133 @@
+{
+    "Function": {
+        "prefix": "fn",
+        "body": [
+            "fn ${1:function_name}(${2:params}) -> ${3:i32} {",
+            "\t$0",
+            "\treturn ${4:0};",
+            "}"
+        ],
+        "description": "Create a new function"
+    },
+    "Main Function": {
+        "prefix": "main",
+        "body": [
+            "fn main() -> i32 {",
+            "\t$0",
+            "\treturn 0;",
+            "}"
+        ],
+        "description": "Create main function"
+    },
+    "Struct": {
+        "prefix": "struct",
+        "body": [
+            "struct ${1:StructName} {",
+            "\t${2:field}: ${3:type},",
+            "\t$0",
+            "}"
+        ],
+        "description": "Create a new struct"
+    },
+    "Impl Block": {
+        "prefix": "impl",
+        "body": [
+            "impl ${1:StructName} {",
+            "\tfn ${2:method_name}(${3:self}) -> ${4:ReturnType} {",
+            "\t\t$0",
+            "\t}",
+            "}"
+        ],
+        "description": "Create an implementation block"
+    },
+    "Let Statement": {
+        "prefix": "let",
+        "body": [
+            "let ${1:mut }${2:name}: ${3:type} = ${4:value};"
+        ],
+        "description": "Create a let binding"
+    },
+    "If Statement": {
+        "prefix": "if",
+        "body": [
+            "if ${1:condition} {",
+            "\t$0",
+            "}"
+        ],
+        "description": "Create an if statement"
+    },
+    "If-Else Statement": {
+        "prefix": "ifelse",
+        "body": [
+            "if ${1:condition} {",
+            "\t$2",
+            "} else {",
+            "\t$0",
+            "}"
+        ],
+        "description": "Create an if-else statement"
+    },
+    "While Loop": {
+        "prefix": "while",
+        "body": [
+            "while ${1:condition} {",
+            "\t$0",
+            "}"
+        ],
+        "description": "Create a while loop"
+    },
+    "For Loop": {
+        "prefix": "for",
+        "body": [
+            "for ${1:i} in ${2:0}..${3:10} {",
+            "\t$0",
+            "}"
+        ],
+        "description": "Create a for loop"
+    },
+    "Loop": {
+        "prefix": "loop",
+        "body": [
+            "loop {",
+            "\t$0",
+            "\tif ${1:condition} {",
+            "\t\tbreak;",
+            "\t}",
+            "}"
+        ],
+        "description": "Create an infinite loop"
+    },
+    "Extern Function": {
+        "prefix": "extern",
+        "body": [
+            "extern fn ${1:function_name}(${2:params}) -> ${3:return_type};"
+        ],
+        "description": "Declare an extern function"
+    },
+    "Include": {
+        "prefix": "include",
+        "body": [
+            "include(\"${1:header.h}\");"
+        ],
+        "description": "Include a C header file"
+    },
+    "Print": {
+        "prefix": "print",
+        "body": [
+            "println(\"${1:message}\");"
+        ],
+        "description": "Print a message"
+    },
+    "Constructor": {
+        "prefix": "new",
+        "body": [
+            "fn new(${1:params}) -> ${2:Self} {",
+            "\treturn ${2:Self} {",
+            "\t\t${3:field}: ${4:value},",
+            "\t\t$0",
+            "\t};",
+            "}"
+        ],
+        "description": "Create a constructor method"
+    }
+}

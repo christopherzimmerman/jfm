@@ -1,0 +1,5 @@
+// Hello World - The simplest JFM program
+fn main() -> i32 {
+    println("Hello, World!");
+    return 0;
+}

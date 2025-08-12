@@ -1,0 +1,48 @@
+// Struct definitions and usage
+struct Point {
+    x: f32,
+    y: f32
+}
+
+struct Rectangle {
+    top_left: Point,
+    width: f32,
+    height: f32
+}
+
+struct Person {
+    name: str,
+    age: i32,
+    is_student: bool
+}
+
+fn main() -> i32 {
+    // Creating struct instances
+    let origin: Point = Point { x: 0.0, y: 0.0 };
+    let p1: Point = Point { x: 3.0, y: 4.0 };
+    
+    // Accessing fields
+    let x_coord: f32 = p1.x;
+    let y_coord: f32 = p1.y;
+    
+    // Nested structs
+    let rect: Rectangle = Rectangle {
+        top_left: Point { x: 10.0, y: 20.0 },
+        width: 100.0,
+        height: 50.0
+    };
+    
+    let corner_x: f32 = rect.top_left.x;
+    let area: f32 = rect.width * rect.height;
+    
+    // Struct with different field types
+    let person: Person = Person {
+        name: "Bob",
+        age: 25,
+        is_student: false
+    };
+
+    print(person.name);
+    
+    return 0;
+}

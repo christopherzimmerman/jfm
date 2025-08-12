@@ -1,0 +1,30 @@
+// Simple casting test
+
+extern fn malloc(size: u64) -> *u8;
+extern fn free(ptr: *u8);
+
+fn main() -> i32 {
+    // Test numeric casting
+    let x: i32 = 42;
+    let y: f64 = x as f64;
+    let z: u8 = x as u8;
+    
+    println(x);
+    println(y);
+    println(z);
+    
+    // Test pointer casting
+    let mem: *u8 = malloc(100);
+    let int_ptr: *i32 = mem as *i32;
+
+    int_ptr[1] = 2;
+    print(int_ptr[1]);
+    
+    // Cast back for free
+    free(int_ptr as *u8);
+    
+    // Null pointer casting
+    let null: *i32 = 0 as *i32;
+    
+    return 0;
+}

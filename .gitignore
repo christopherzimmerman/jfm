@@ -1,0 +1,147 @@
+# JFM Compiler .gitignore
+
+# Compiled executables
+*.exe
+*.out
+*.app
+jfmc
+
+# Object files
+*.o
+*.obj
+*.ko
+*.elf
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Dependency files
+*.d
+*.dep
+
+# Build directories
+build/
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.*.swp
+.*.swo
+
+# Test output files
+test_*.exe
+test_*.c
+test_*.jfm
+test_output.c
+*.test
+
+# Generated C files from examples (keep the .jfm sources)
+examples/*.c
+examples/*.exe
+examples/*.out
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Visual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+.vs/
+
+# Windows specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS specific
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux specific
+.directory
+.Trash-*
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Log files
+*.log
+*.logs
+
+# Coverage files
+*.gcov
+*.gcda
+*.gcno
+coverage/
+*.coverage
+htmlcov/
+
+# Documentation build
+docs/_build/
+docs/html/
+doxygen/
+
+# Package files
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+*.rar
+
+# Node.js (for tools that use npm)
+tools/*/node_modules/
+tools/vscode/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Python (if any Python scripts are added)
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+
+# Misc
+nul
+core
+core.*
+vgcore.*
+*.stackdump

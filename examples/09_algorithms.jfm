@@ -1,0 +1,82 @@
+// Common algorithms implementation
+fn bubble_sort(arr: &mut [i32; 10]) {
+    let n: i32 = 10;
+    for i: i32 in 0..n {
+        for j: i32 in 0..(n - i - 1) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap
+                let temp: i32 = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+fn binary_search(arr: &[i32; 10], target: i32) -> i32 {
+    let mut left: i32 = 0;
+    let mut right: i32 = 9;
+    
+    while (left <= right) {
+        let mid: i32 = left + (right - left) / 2;
+        
+        if (arr[mid] == target) {
+            return mid;
+        }
+        
+        if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    
+    return -1;  // Not found
+}
+
+fn gcd(a: i32, b: i32) -> i32 {
+    if (b == 0) {
+        return a;
+    }
+    return gcd(b, a % b);
+}
+
+fn is_prime(n: i32) -> bool {
+    if (n <= 1) {
+        return false;
+    }
+    if (n <= 3) {
+        return true;
+    }
+    if (n % 2 == 0 || n % 3 == 0) {
+        return false;
+    }
+    
+    let mut i: i32 = 5;
+    while (i * i <= n) {
+        if (n % i == 0 || n % (i + 2) == 0) {
+            return false;
+        }
+        i = i + 6;
+    }
+    
+    return true;
+}
+
+fn main() -> i32 {
+    let mut numbers: [i32; 10] = [64, 34, 25, 12, 22, 11, 90, 88, 45, 50];
+    
+    // Sort the array
+    bubble_sort(&mut numbers);
+    
+    // Search for a value
+    let index: i32 = binary_search(&numbers, 45);
+    
+    // Find GCD
+    let greatest: i32 = gcd(48, 18);
+    
+    // Check primality
+    let prime_check: bool = is_prime(17);
+    
+    return 0;
+}

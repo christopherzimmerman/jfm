@@ -1,0 +1,36 @@
+{
+    "name": "jfm",
+    "displayName": "JFM Language Support",
+    "description": "Syntax highlighting and language support for JFM (Rust-like language that transpiles to C)",
+    "version": "1.0.0",
+    "publisher": "jfm-lang",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "jfm",
+                "aliases": ["JFM", "jfm"],
+                "extensions": [".jfm"],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "jfm",
+                "scopeName": "source.jfm",
+                "path": "./syntaxes/jfm.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "jfm",
+                "path": "./snippets/jfm.json"
+            }
+        ]
+    }
+}

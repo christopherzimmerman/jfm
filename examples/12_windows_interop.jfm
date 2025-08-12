@@ -1,0 +1,14 @@
+// Windows API interop example
+include("windows.h");
+
+// Declare the MessageBox function from Windows API
+// Note: We use i32 for HWND (as a simple int), and str for text (maps to const char*)
+extern fn MessageBoxA(hwnd: i32, text: str, caption: str, uType: u32) -> i32;
+
+fn main() -> i32 {
+    // MB_OK = 0
+    // MB_ICONINFORMATION = 64 (0x40 in hex)
+    let result: i32 = MessageBoxA(0, "Hello from JFM!", "JFM Windows Interop", 64);
+    
+    return 0;
+}

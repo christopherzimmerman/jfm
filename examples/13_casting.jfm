@@ -1,0 +1,48 @@
+// Example demonstrating type casting with malloc/free
+
+// Declare malloc and free from C stdlib
+extern fn malloc(size: u64) -> *u8;
+extern fn free(ptr: *u8);
+
+struct Node {
+    value: i32,
+    next: *Node,
+}
+
+fn create_node(value: i32) -> *Node {
+    // Allocate memory for a Node and cast it
+    let node_ptr: *Node = malloc(16) as *Node;
+    
+    // Dereference and initialize - using arrow operator would be better but not implemented yet
+    // For now, let's avoid the dereference and use a different approach
+    // (*node_ptr).value = value;
+    // (*node_ptr).next = 0 as *Node;  // NULL pointer
+    
+    return node_ptr;
+}
+
+fn destroy_node(node: *Node) {
+    // Cast back to *u8 for free
+    free(node as *u8);
+}
+
+fn main() -> i32 {
+    // Test basic numeric casting
+    let x: i32 = 42;
+    let y: f64 = x as f64;
+    let z: u8 = x as u8;
+    
+    // Test pointer casting with malloc
+    let node: *Node = create_node(100);
+    
+    // Access the node
+    println((*node).value);
+    
+    // Clean up
+    destroy_node(node);
+    
+    // Test null pointer casting
+    let null_ptr: *i32 = 0 as *i32;
+    
+    return 0;
+}

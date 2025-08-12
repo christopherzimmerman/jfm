@@ -1,0 +1,50 @@
+// Example of mutating an array through a function
+fn reverse_array(arr: &mut [i32; 5]) {
+    let n: i32 = 5;
+    let mut i: i32 = 0;
+    let end: i32 = n - 1;
+    
+    while (i < end - i) {
+        // Swap elements
+        let temp: i32 = arr[i];
+        arr[i] = arr[end - i];
+        arr[end - i] = temp;
+        i = i + 1;
+    }
+}
+
+fn double_values(arr: &mut [i32; 5]) {
+    for i: i32 in 0..5 {
+        arr[i] = arr[i] * 2;
+    }
+}
+
+fn print_array(arr: &[i32; 5]) {
+    println("Array contents:");
+    for i: i32 in 0..5 {
+        print("  [");
+        print(i);
+        print("] = ");
+        println(arr[i]);
+    }
+}
+
+fn main() -> i32 {
+    // Create an array
+    let mut numbers: [i32; 5] = [1, 2, 3, 4, 5];
+    
+    println("Original array:");
+    print_array(&numbers);
+    
+    // Double all values
+    double_values(&mut numbers);
+    println("After doubling:");
+    print_array(&numbers);
+    
+    // Reverse the array
+    reverse_array(&mut numbers);
+    println("After reversing:");
+    print_array(&numbers);
+    
+    return 0;
+}
