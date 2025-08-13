@@ -178,20 +178,11 @@ static AstNode* declaration(Parser* parser);
 static Type* parse_type(Parser* parser);
 
 static AstNode* primary(Parser* parser) {
-    // Check for error tokens and skip them
     if (peek(parser)->type == TOKEN_ERROR) {
         error_at_current(parser, peek(parser)->start);
-        advance(parser);  // Skip the error token
+        advance(parser);
         return NULL;
     }
-    
-    // Debug: print current token
-    #if 0
-    Token* current = peek(parser);
-    printf("DEBUG primary: token type=%d lexeme='%.*s' at %lu:%lu\n", 
-           current->type, (int)current->length, current->start, 
-           (unsigned long)current->line, (unsigned long)current->column);
-    #endif
     
     if (match(parser, TOKEN_TRUE)) {
         Token* token = previous(parser);
@@ -243,13 +234,10 @@ static AstNode* primary(Parser* parser) {
     
     if (match(parser, TOKEN_IDENTIFIER)) {
         Token* name_token = previous(parser);
-        
-        // Check if this might be a struct literal
-        // We only parse as struct literal if followed by { then field: or }
+
         if (check(parser, TOKEN_LBRACE)) {
-            // Save position before consuming {
             size_t saved_pos = parser->current;
-            advance(parser);  // consume {
+            advance(parser);
             
             bool is_struct_literal = false;
             if (check(parser, TOKEN_RBRACE)) {
@@ -735,17 +723,13 @@ static Type* parse_type(Parser* parser) {
     }
     
     if (match(parser, TOKEN_LBRACKET)) {
-        // For arrays, we need to parse the element type
-        // But we must be careful not to cause infinite recursion
         Type* elem_type = NULL;
-        
-        // Check for primitive types first
+
         Token* type_token = peek(parser);
         elem_type = type_from_token(type_token->type);
         if (elem_type) {
             advance(parser);
         } else if (check(parser, TOKEN_IDENTIFIER)) {
-            // Struct type
             advance(parser);
             elem_type = type_create(TYPE_STRUCT);
             elem_type->data.struct_type.name = string_n_duplicate(previous(parser)->start, previous(parser)->length);
@@ -801,7 +785,6 @@ static AstNode* block_statement(Parser* parser) {
     const int MAX_STATEMENTS = 10000;
     
     while (!check(parser, TOKEN_RBRACE) && !is_at_end(parser)) {
-        // Guard against infinite loops
         if (++loop_guard > MAX_STATEMENTS) {
             error_at_current(parser, "Block too large or parser stuck in loop");
             break;
@@ -831,16 +814,13 @@ static AstNode* block_statement(Parser* parser) {
             AstNode* expr = expression(parser);
             
             if (match(parser, TOKEN_SEMICOLON)) {
-                // Has semicolon - it's a statement
                 if (expr) {
                     node->data.block.statements[node->data.block.statement_count++] = expr;
                 }
             } else if (check(parser, TOKEN_RBRACE)) {
-                // No semicolon and at } - it's the final expression
                 node->data.block.final_expr = expr;
                 break;
             } else {
-                // No semicolon but not at } - this is an error
                 error_at_current(parser, "Expected ';' or '}' after expression");
             }
         }
@@ -1172,7 +1152,7 @@ static AstNode* struct_declaration(Parser* parser) {
  * @return AST node for the impl block
  */
 static AstNode* impl_block(Parser* parser) {
-    Token* impl_token = previous(parser);  // The 'impl' token
+    Token* impl_token = previous(parser);
     AstNode* node = create_node_with_location(parser, AST_IMPL, impl_token);
     
     Token* name = consume(parser, TOKEN_IDENTIFIER, "Expected struct name after 'impl'");
@@ -1188,7 +1168,7 @@ static AstNode* impl_block(Parser* parser) {
     
     int loop_guard = 0;
     const int MAX_IMPL_FUNCTIONS = 500;
-    size_t prev_position = (size_t)-1;  // Initialize to invalid value
+    size_t prev_position = (size_t)-1;
     
     
     while (!check(parser, TOKEN_RBRACE) && !is_at_end(parser)) {
@@ -1196,8 +1176,7 @@ static AstNode* impl_block(Parser* parser) {
             error_at_current(parser, "Too many functions in impl block or parser stuck in loop");
             break;
         }
-        
-        // Only check for stuck parser after first iteration
+
         if (prev_position != (size_t)-1 && parser->current == prev_position) {
             error_at_current(parser, "Parser stuck in impl block parsing");
             advance(parser);
@@ -1237,11 +1216,40 @@ static AstNode* extern_declaration(Parser* parser) {
         if (name) {
             node->data.struct_def.name = string_n_duplicate(name->start, name->length);
         }
-        
-        consume(parser, TOKEN_SEMICOLON, "Expected ';' after extern struct declaration");
-        
-        node->data.struct_def.fields = NULL;
-        node->data.struct_def.field_count = 0;
+
+        if (match(parser, TOKEN_SEMICOLON)) {
+            node->data.struct_def.fields = NULL;
+            node->data.struct_def.field_count = 0;
+        } else {
+            consume(parser, TOKEN_LBRACE, "Expected '{' or ';' after extern struct name");
+            
+            size_t field_capacity = 8;
+            node->data.struct_def.fields = malloc(sizeof(Field) * field_capacity);
+            node->data.struct_def.field_count = 0;
+            
+            while (!check(parser, TOKEN_RBRACE) && !is_at_end(parser)) {
+                Token* field_name = consume(parser, TOKEN_IDENTIFIER, "Expected field name");
+                consume(parser, TOKEN_COLON, "Expected ':' after field name");
+                Type* field_type = parse_type(parser);
+                
+                if (field_name && field_type) {
+                    if (node->data.struct_def.field_count >= field_capacity) {
+                        field_capacity *= 2;
+                        node->data.struct_def.fields = realloc(node->data.struct_def.fields, 
+                                                               sizeof(Field) * field_capacity);
+                    }
+                    
+                    node->data.struct_def.fields[node->data.struct_def.field_count].name = 
+                        string_n_duplicate(field_name->start, field_name->length);
+                    node->data.struct_def.fields[node->data.struct_def.field_count].type = field_type;
+                    node->data.struct_def.field_count++;
+                }
+                
+                consume(parser, TOKEN_COMMA, "Expected ',' after struct field");
+            }
+            
+            consume(parser, TOKEN_RBRACE, "Expected '}' after struct fields");
+        }
         
         return node;
     }
@@ -1308,7 +1316,7 @@ static AstNode* include_directive(Parser* parser) {
     Token* path_token = consume(parser, TOKEN_STRING_LITERAL, "Expected string literal for include path");
     if (path_token) {
         node->data.include.path = string_n_duplicate(path_token->start + 1, path_token->length - 2);
-        node->data.include.is_system = true;
+        node->data.include.is_system = false;
     }
     
     consume(parser, TOKEN_RPAREN, "Expected ')' after include path");

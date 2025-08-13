@@ -1,0 +1,84 @@
+// Simple Raylib window example
+// Demonstrates JFM + Raylib integration with extern structs
+// 
+// Build command:
+// Windows: ..\jfmc 15_raylib_simple.jfm -o 15_raylib_simple.exe --cc-flags "-lraylib -lm -lopengl32 -lgdi32 -lwinmm"
+
+// Include raylib header for C compilation
+include("raylib.h");
+
+// Define Color struct to match raylib's (won't generate duplicate in C)
+extern struct Color {
+    r: u8,
+    g: u8,
+    b: u8,
+    a: u8,
+}
+
+// Declare the raylib functions we'll use
+extern fn InitWindow(width: i32, height: i32, title: str);
+extern fn CloseWindow();
+extern fn WindowShouldClose() -> i32;
+extern fn BeginDrawing();
+extern fn EndDrawing();
+extern fn ClearBackground(color: Color);
+extern fn SetTargetFPS(fps: i32);
+extern fn DrawText(text: str, posX: i32, posY: i32, fontSize: i32, color: Color);
+extern fn DrawCircle(centerX: i32, centerY: i32, radius: f32, color: Color);
+
+fn main() -> i32 {
+    // Initialize window
+    InitWindow(800, 600, "JFM + Raylib Example");
+    SetTargetFPS(60);
+    
+    // Define colors  
+    let mut white: Color = Color { r: 245, g: 245, b: 245, a: 255 };
+    let mut red: Color = Color { r: 230, g: 41, b: 55, a: 255 };
+    let mut blue: Color = Color { r: 0, g: 121, b: 241, a: 255 };
+    let mut gray: Color = Color { r: 80, g: 80, b: 80, a: 255 };
+    
+    // Animation variables
+    let mut ball_x: i32 = 400;
+    let mut ball_y: i32 = 300;
+    let mut velocity_x: i32 = 3;
+    let mut velocity_y: i32 = 2;
+    
+    // Main game loop
+    while WindowShouldClose() == 0 {
+        // Update ball position
+        ball_x = ball_x + velocity_x;
+        ball_y = ball_y + velocity_y;
+        
+        // Bounce off walls
+        if ball_x > 770 || ball_x < 30 {
+            velocity_x = -velocity_x;
+        }
+        if ball_y > 570 || ball_y < 30 {
+            velocity_y = -velocity_y;
+        }
+        
+        // Draw frame
+        BeginDrawing();
+        ClearBackground(white);
+        
+        // Draw bouncing ball
+        DrawCircle(ball_x, ball_y, 20.0, red);
+        
+        // Draw static decorations
+        DrawCircle(100, 100, 30.0, blue);
+        DrawCircle(700, 100, 30.0, blue);
+        DrawCircle(100, 500, 30.0, blue);
+        DrawCircle(700, 500, 30.0, blue);
+        
+        // Draw text
+        DrawText("JFM + Raylib Integration!", 250, 50, 20, gray);
+        DrawText("Press ESC to exit", 10, 10, 20, gray);
+        
+        EndDrawing();
+    }
+    
+    // Clean up
+    CloseWindow();
+    
+    return 0;
+}
